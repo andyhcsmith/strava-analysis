@@ -31,6 +31,12 @@ token <- oauth2.0_token(endpoint, app, as_header = FALSE,
 
 # Reading all gpx files
 data <- process_data('activities/')
+
+# Summary statistics for strava activities
+
+
+
+
 p1 <- plot_facets(data)
 ggsave("plots/facets001.png", p1, width = 20, height = 20, units = "cm")
   
