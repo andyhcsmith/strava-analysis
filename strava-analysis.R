@@ -33,7 +33,7 @@ token <- oauth2.0_token(endpoint, app, as_header = FALSE,
 data <- process_data('activities/')
 
 # Summary statistics for strava activities
-
+length(unique(data$id))
 
 
 

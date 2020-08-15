@@ -1,1 +1,6 @@
+# auto generated files
 .httr-oauth
+log.txt
+
+# static files
+plots/
