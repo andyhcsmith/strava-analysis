@@ -4,6 +4,7 @@
 devtools::install_github("marcusvolz/strava")
 devtools::install_github('fawda123/rStrava')
 
+library(tidyverse)
 library(yaml)
 library(httr)
 library(jsonlite)
@@ -46,9 +47,4 @@ ggsave("plots/ridges001.png", p5, width = 20, height = 20, units = "cm")
 p6 <- plot_ridges(data %>% filter(time >= "2020-03-01"))
 ggsave("plots/ridges002.png", p6, width = 20, height = 20, units = "cm")
 
-
-# Ben stuff
-data <- process_data('ben/')
-data$id = as.Date(data$time)
-p1 <- plot_facets(data)
 
