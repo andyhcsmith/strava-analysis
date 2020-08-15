@@ -34,7 +34,7 @@ data <- process_data('activities/')
 
 # Summary statistics for strava activities
 length(unique(data$id))
-
+# New line for testing git
 
 
 p1 <- plot_facets(data)
