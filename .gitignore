@@ -1,6 +1,7 @@
 # auto generated files
 .httr-oauth
 log.txt
+.Rhistory
 
 # static files
 plots/
