@@ -27,7 +27,10 @@ Volz](https://github.com/marcusvolz/strava).
 
 ## Grab your attention
 
-![](READEME_files/figure-gfm/cars-1.png)<!-- -->
+I thought this was an awesome plot that Marcus Volz made - so simple yet
+effective in visualising all your activities in one plot.
+
+![](README_files/figure-gfm/cars-1.png)<!-- -->
 
 ## Visualising my Runs
 
@@ -52,7 +55,7 @@ consistent uploads to Strava:
 2.  Early 2020 - motivation to start running consistently again as
     Melbourne went into Covid lockdown
 
-![](READEME_files/figure-gfm/runs-1.png)<!-- -->
+![](README_files/figure-gfm/runs-1.png)<!-- -->
 
 # Where have I been running?
 
@@ -67,14 +70,16 @@ part of Melbourne. Three things to note:
     you down St Kilda.
 3.  The run I did where I spelt out my name (ANDY) :)
 
-![](READEME_files/figure-gfm/map-1.png)<!-- --> \# What time of the day?
+![](README_files/figure-gfm/map-1.png)<!-- -->
+
+# What time of the day?
 
 This visual by Marcus allowsyou to see the frequency of your runs by
 time of day and day of week.
 
     ## Picking joint bandwidth of 2500
 
-![](READEME_files/figure-gfm/time%20of%20day-1.png)<!-- -->
+![](README_files/figure-gfm/time%20of%20day-1.png)<!-- -->
 
 I thought it might be interesting to see how this distribution changed
 between last year and this COVID affected year where I have been working
@@ -86,4 +91,4 @@ more dispersed across the day compared to pre-COVID.
 
     ## Picking joint bandwidth of 3370
 
-![](READEME_files/figure-gfm/pre%20and%20post-1.png)<!-- -->
+![](README_files/figure-gfm/pre%20and%20post-1.png)<!-- -->
