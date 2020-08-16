@@ -1,6 +1,11 @@
 ---
 title: "Strava Analysis"
 output: github_document
+
+knit: (function(inputFile, encoding) { 
+          rmarkdown::render(inputFile,
+                        encoding=encoding, 
+                        output_file='READEME')})
 ---
 
 ```{r setup, include=FALSE}
@@ -23,6 +28,8 @@ To get access to my activity data I used the Strava API and the [rStrava package
 
 
 ## Grab your attention
+
+I thought this was an awesome plot that Marcus Volz made - so simple yet effective in visualising all your activities in one plot.
 
 ```{r cars, echo=FALSE}
 suppressPackageStartupMessages({
@@ -80,6 +87,7 @@ p_map <- plot_map(data, lon_min = 144.863491, lon_max = 145.073007, lat_min = -3
           theme(plot.title = element_text(hjust = 0.5))
 p_map
 ```
+
 # What time of the day?
 
 This visual by Marcus allowsyou to see the frequency of your runs by time of day and day of week.
