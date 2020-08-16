@@ -34,6 +34,7 @@ I thought this was an awesome plot that Marcus Volz made - so simple yet effecti
 ```{r cars, echo=FALSE}
 suppressPackageStartupMessages({
   library(tidyverse)
+  library(lubridate)
   library(yaml)
   library(httr)
   library(jsonlite)
@@ -49,10 +50,8 @@ setwd('C:/Users/sma8lw/OneDrive - BP/Documents/Andrew/Other/strava-app')
 data <- process_data('activities/')
 p1 <- plot_facets(data)
 p1
-```
-## Exploration
-
-### Using the Strava API
+```   
+## Using the Strava API
 
 The Strava API allows you to pull all of your activities into a data frame, which each row representing an aggreagted view of your run/cycle/swim. It contains information such as: date, distance, time, speed, elevation, heart-rate etc.
 
@@ -79,17 +78,6 @@ acts <- acts %>% mutate(speed_min_km = (moving_time/60)/distance)
 acts <- acts %>% filter(speed_min_km > 3 & speed_min_km < 5.5)
 
 
-```
-
-### Speed vs Distance
-
-What happens to my speed as the distance I run get longer.... pretty obvious.
-
-``` {r speed vs distance, echo = F}
-
-acts <- acts %>% filter(speed_min_km > 3 & speed_min_km < 5.5)
-
-
 acts <- acts %>% 
         mutate(distance_bucket = case_when(
                                             distance < 6 ~ "< 6km",
@@ -101,21 +89,48 @@ acts <- acts %>%
         )
 acts$distance_bucket = factor(acts$distance_bucket, levels=c("< 6km", "6km - 9km", "9km - 12km", "12km - 15km", "> 15km"))
 
+
+```
+
+### Speed vs Distance
+
+What happens to my speed as the distance I run get longer.... pretty obvious.
+The one interesting thing was that my runs in the 6km to 9km range were on average faster than the under 5km range. My guess is that the majority of my 'Under 5km runs' are when I have no energy to get out and do a proper run, and so I just run at a casual pace.
+
+```{r run summary, echo=F}
+acts_summary <- acts %>% 
+                group_by(distance_bucket) %>%
+                summarise(`Number of Runs` = length(athlete.id), 
+                          `Average Distance` = mean(distance), 
+                          `Average Speed` = round(seconds_to_period(mean(speed_min_km)*60),0),
+                          .groups = 'drop')
+
+knitr::kable(
+  acts_summary
+)           
+
+```
+
+
+``` {r speed vs distance, echo = F}
+
+acts <- acts %>% group_by(distance_bucket) %>% mutate(avg_speed = mean(speed_min_km))
 speed_distance <- acts %>% 
                     ggplot(aes(x = speed_min_km, fill = distance_bucket)) + 
                     geom_density(alpha = 0.5) + 
-                    labs(title = "Average speed (min/km) against Distance RUn", x = "Speed (min/km)", y = "Density") +
+                    labs(title = "Average speed (min/km) vs. Distance Run", x = "Speed (min/km)", y = "Density") +
                     xlim(3.5, 5.5) +
-                    facet_grid(rows = vars(distance_bucket))
+                    facet_grid(rows = vars(distance_bucket)) +
+                    geom_vline(aes(xintercept = avg_speed, group = distance_bucket), colour="grey50")
+
+
 speed_distance
 
 ```
 
-### Most importantly...How do I get Kudos
+### Most importantly, how do I get Kudos?
 
-The social-media part of Strava allows users to like each others activities that they have posted, in Strava, this is called giving 'Kudos'.
-
-So, I wondered what the best way to get Kudos from my Strava community was. Do they prefer fast runs, or longer runs? 
+The social-media part of Strava allows users to like each others activities that they have posted, in Strava, this is called giving **'Kudos'**. I wondered, what the best way to get Kudos from my Strava community. Do they prefer fast runs, or longer runs? 
 
 I should note that around mid-late April 2020 I synced my Strava with my Facebook account meaning I was now connected to a larger community of my friends. Hence, to make this a fair, I will only be looking at my runs after April 24th 2020.
 
@@ -134,6 +149,9 @@ grid.arrange(kudos_speed, kudos_distsance, ncol = 2)
 
 ```
 
+The evidence is clear: 
+
+**DISTANCE = KUDOS**
 
 ## Visualising GPS data
 
@@ -177,20 +195,20 @@ p_map
 This visual allows you to see the frequency of your runs by time of day and day of week. I clearly prefer to run after work on Monday - Thursday, in the mornings on Friday and Saturday, and across the day on Sundays.
 
 ```{r time of day, echo = F}
-plot_ridges(data)
+suppressMessages(plot_ridges(data))
 
 ```
 
 I thought it might be interesting to see how this distribution changed between last year and this COVID affected year. During COVID I have been working from home, which has given me the flexibility to run during the day. And sure enough, you can see that in the post-COVID plot, my runs have been much more dispersed across the day compared to pre-COVID.
 
 
-```{r pre and post, echo = F}
+```{r time of day 2, echo=FALSE}
 pre_covid <- plot_ridges(data %>% filter(time <= "2020-03-01")) + ggtitle("Pre-Covid") +
           theme(plot.title = element_text(hjust = 0.5))
 post_covid <- plot_ridges(data %>% filter(time > "2020-03-01")) + ggtitle("Post-Covid") +
           theme(plot.title = element_text(hjust = 0.5)) 
 
-grid.arrange(pre_covid, post_covid, ncol = 2)
+suppressMessages(grid.arrange(pre_covid, post_covid, ncol = 2))
 
 ```
 

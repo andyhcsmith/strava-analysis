@@ -31,9 +31,8 @@ Volz](https://github.com/marcusvolz/strava).
 I thought this was an awesome plot that Marcus Volz made - so simple yet
 effective in visualising all your activities in one plot.
 
-![](README_files/figure-gfm/cars-1.png)<!-- --> \#\# Exploration
-
-### Using the Strava API
+![](README_files/figure-gfm/cars-1.png)<!-- --> \#\# Using the Strava
+API
 
 The Strava API allows you to pull all of your activities into a data
 frame, which each row representing an aggreagted view of your
@@ -46,18 +45,27 @@ activities.
 ### Speed vs Distance
 
 What happens to my speed as the distance I run get longer…. pretty
-obvious.
+obvious. The one interesting thing was that my runs in the 6km to 9km
+range were on average faster than the under 5km range. My guess is that
+the majority of my ‘Under 5km runs’ are when I have no energy to get out
+and do a proper run, and so I just run at a casual pace.
+
+| distance\_bucket | Number of Runs | Average Distance | Average Speed |
+| :--------------- | -------------: | ---------------: | ------------: |
+| \< 6km           |             20 |         4.489070 |        4M 29S |
+| 6km - 9km        |             65 |         7.435383 |        4M 27S |
+| 9km - 12km       |             42 |        10.384460 |        4M 33S |
+| 12km - 15km      |             14 |        12.998479 |        4M 36S |
+| \> 15km          |             15 |        22.594313 |        4M 43S |
 
 ![](README_files/figure-gfm/speed%20vs%20distance-1.png)<!-- -->
 
-### Most importantly…How do I get Kudos
+### Most importantly, how do I get Kudos?
 
 The social-media part of Strava allows users to like each others
 activities that they have posted, in Strava, this is called giving
-‘Kudos’.
-
-So, I wondered what the best way to get Kudos from my Strava community
-was. Do they prefer fast runs, or longer runs?
+**‘Kudos’**. I wondered, what the best way to get Kudos from my Strava
+community. Do they prefer fast runs, or longer runs?
 
 I should note that around mid-late April 2020 I synced my Strava with my
 Facebook account meaning I was now connected to a larger community of my
@@ -65,6 +73,10 @@ friends. Hence, to make this a fair, I will only be looking at my runs
 after April 24th 2020.
 
 ![](README_files/figure-gfm/kudos-1.png)<!-- -->
+
+The evidence is clear:
+
+**DISTANCE = KUDOS**
 
 ## Visualising GPS data
 
@@ -123,10 +135,6 @@ working from home, which has given me the flexibility to run during the
 day. And sure enough, you can see that in the post-COVID plot, my runs
 have been much more dispersed across the day compared to pre-COVID.
 
-    ## Picking joint bandwidth of 1450
-
-    ## Picking joint bandwidth of 3370
-
-![](README_files/figure-gfm/pre%20and%20post-1.png)<!-- -->
+![](README_files/figure-gfm/time%20of%20day%202-1.png)<!-- -->
 
 ## Conclusion
