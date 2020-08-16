@@ -4,9 +4,10 @@ Strava Analysis
 ## Introduction
 
 The idea of this project was primarily a way of putting into practice my
-learnings from Jad Khalili’s Udemy Course on Git/GitHub (Git: Become an
-Expert in Git & GitHub in 4 Hours). I took this course in order to
-deepen my knowledge around best practices in data science.
+learnings from Jad Khalili’s [Udemy
+Course](https://www.udemy.com/course/git-expert-4-hours/) on Git/GitHub.
+I took this course in order to deepen my knowledge around best practices
+in data science and source/version control.
 
 In this course Jad covers:
 
@@ -30,9 +31,42 @@ Volz](https://github.com/marcusvolz/strava).
 I thought this was an awesome plot that Marcus Volz made - so simple yet
 effective in visualising all your activities in one plot.
 
-![](README_files/figure-gfm/cars-1.png)<!-- -->
+![](README_files/figure-gfm/cars-1.png)<!-- --> \#\# Exploration
 
-## Visualising my Runs
+### Using the Strava API
+
+The Strava API allows you to pull all of your activities into a data
+frame, which each row representing an aggreagted view of your
+run/cycle/swim. It contains information such as: date, distance, time,
+speed, elevation, heart-rate etc.
+
+This aggregated view allows you to look at some high level data of your
+activities.
+
+### Speed vs Distance
+
+What happens to my speed as the distance I run get longer…. pretty
+obvious.
+
+![](README_files/figure-gfm/speed%20vs%20distance-1.png)<!-- -->
+
+### Most importantly…How do I get Kudos
+
+The social-media part of Strava allows users to like each others
+activities that they have posted, in Strava, this is called giving
+‘Kudos’.
+
+So, I wondered what the best way to get Kudos from my Strava community
+was. Do they prefer fast runs, or longer runs?
+
+I should note that around mid-late April 2020 I synced my Strava with my
+Facebook account meaning I was now connected to a larger community of my
+friends. Hence, to make this a fair, I will only be looking at my runs
+after April 24th 2020.
+
+![](README_files/figure-gfm/kudos-1.png)<!-- -->
+
+## Visualising GPS data
 
 Strava members are also able to access their Strava data by requesting
 an archive of all of their activities
@@ -45,7 +79,7 @@ them as GPX files.
 
 This is how many of Marcus Volz’s creative plots can be generated:
 
-# Running frequency
+### Running frequency
 
 You will notice there are two main periods that I have maintained
 consistent uploads to Strava:
@@ -57,7 +91,7 @@ consistent uploads to Strava:
 
 ![](README_files/figure-gfm/runs-1.png)<!-- -->
 
-# Where have I been running?
+### Where have I been running?
 
 The following plot shows my runs placed on a map, with the darkness of
 the lines indicating the number of times I have run over a particular
@@ -72,23 +106,27 @@ part of Melbourne. Three things to note:
 
 ![](README_files/figure-gfm/map-1.png)<!-- -->
 
-# What time of the day?
+### What time of the day?
 
-This visual by Marcus allowsyou to see the frequency of your runs by
-time of day and day of week.
+This visual allows you to see the frequency of your runs by time of day
+and day of week. I clearly prefer to run after work on Monday -
+Thursday, in the mornings on Friday and Saturday, and across the day on
+Sundays.
 
     ## Picking joint bandwidth of 2500
 
 ![](README_files/figure-gfm/time%20of%20day-1.png)<!-- -->
 
 I thought it might be interesting to see how this distribution changed
-between last year and this COVID affected year where I have been working
-from home and have had the flexibility to run during the day. And sure
-enough, you can see that in the post-COVID plot, my runs have been much
-more dispersed across the day compared to pre-COVID.
+between last year and this COVID affected year. During COVID I have been
+working from home, which has given me the flexibility to run during the
+day. And sure enough, you can see that in the post-COVID plot, my runs
+have been much more dispersed across the day compared to pre-COVID.
 
     ## Picking joint bandwidth of 1450
 
     ## Picking joint bandwidth of 3370
 
 ![](README_files/figure-gfm/pre%20and%20post-1.png)<!-- -->
+
+## Conclusion
