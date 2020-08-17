@@ -43,6 +43,8 @@ speed, elevation, heart-rate etc.
 This aggregated view allows you to look at some high level data of your
 activities.
 
+    ## Auto-refreshing stale OAuth token.
+
 ### Speed vs Distance
 
 What happens to my speed as the distance I run get longer…. pretty
