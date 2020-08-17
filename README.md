@@ -31,8 +31,9 @@ Volz](https://github.com/marcusvolz/strava).
 I thought this was an awesome plot that Marcus Volz made - so simple yet
 effective in visualising all your activities in one plot.
 
-![](README_files/figure-gfm/cars-1.png)<!-- --> \#\# Using the Strava
-API
+![](README_files/figure-gfm/cars-1.png)<!-- -->
+
+## Using the Strava API
 
 The Strava API allows you to pull all of your activities into a data
 frame, which each row representing an aggreagted view of your
@@ -45,18 +46,227 @@ activities.
 ### Speed vs Distance
 
 What happens to my speed as the distance I run get longer…. pretty
-obvious. The one interesting thing was that my runs in the 6km to 9km
-range were on average faster than the under 5km range. My guess is that
-the majority of my ‘Under 5km runs’ are when I have no energy to get out
-and do a proper run, and so I just run at a casual pace.
+obvious. The one interesting thing was that my runs in the *6km to 9km*
+range were on **average** faster than the *Under 6km* range. However,
+looking at the **median** the *Under 6km* runs are faster. My guess is
+that occasionally when I am not feeling up for a run, I will just head
+out for a short and slow run which is skewing these means.
 
-| distance\_bucket | Number of Runs | Average Distance | Average Speed |
-| :--------------- | -------------: | ---------------: | ------------: |
-| \< 6km           |             20 |         4.489070 |        4M 29S |
-| 6km - 9km        |             65 |         7.435383 |        4M 27S |
-| 9km - 12km       |             42 |        10.384460 |        4M 33S |
-| 12km - 15km      |             14 |        12.998479 |        4M 36S |
-| \> 15km          |             15 |        22.594313 |        4M 43S |
+<table>
+
+<thead>
+
+<tr>
+
+<th style="text-align:left;">
+
+distance\_bucket
+
+</th>
+
+<th style="text-align:right;">
+
+Number of Runs
+
+</th>
+
+<th style="text-align:right;">
+
+Average Distance
+
+</th>
+
+<th style="text-align:right;">
+
+Average Speed
+
+</th>
+
+<th style="text-align:right;">
+
+Median Speed
+
+</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+<tr>
+
+<td style="text-align:left;">
+
+\< 6km
+
+</td>
+
+<td style="text-align:right;">
+
+20
+
+</td>
+
+<td style="text-align:right;">
+
+4.489070
+
+</td>
+
+<td style="text-align:right;">
+
+4M 29S
+
+</td>
+
+<td style="text-align:right;">
+
+4M 22S
+
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+6km - 9km
+
+</td>
+
+<td style="text-align:right;">
+
+65
+
+</td>
+
+<td style="text-align:right;">
+
+7.435383
+
+</td>
+
+<td style="text-align:right;">
+
+4M 27S
+
+</td>
+
+<td style="text-align:right;">
+
+4M 27S
+
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+9km - 12km
+
+</td>
+
+<td style="text-align:right;">
+
+42
+
+</td>
+
+<td style="text-align:right;">
+
+10.384460
+
+</td>
+
+<td style="text-align:right;">
+
+4M 33S
+
+</td>
+
+<td style="text-align:right;">
+
+4M 33S
+
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+12km - 15km
+
+</td>
+
+<td style="text-align:right;">
+
+14
+
+</td>
+
+<td style="text-align:right;">
+
+12.998479
+
+</td>
+
+<td style="text-align:right;">
+
+4M 36S
+
+</td>
+
+<td style="text-align:right;">
+
+4M 37S
+
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+\> 15km
+
+</td>
+
+<td style="text-align:right;">
+
+15
+
+</td>
+
+<td style="text-align:right;">
+
+22.594313
+
+</td>
+
+<td style="text-align:right;">
+
+4M 43S
+
+</td>
+
+<td style="text-align:right;">
+
+4M 44S
+
+</td>
+
+</tr>
+
+</tbody>
+
+</table>
 
 ![](README_files/figure-gfm/speed%20vs%20distance-1.png)<!-- -->
 
@@ -64,8 +274,8 @@ and do a proper run, and so I just run at a casual pace.
 
 The social-media part of Strava allows users to like each others
 activities that they have posted, in Strava, this is called giving
-**‘Kudos’**. I wondered, what the best way to get Kudos from my Strava
-community. Do they prefer fast runs, or longer runs?
+**‘Kudos’**. I wondered what the best way to get Kudos from my Strava
+community was. Do they prefer fast runs, or longer runs?
 
 I should note that around mid-late April 2020 I synced my Strava with my
 Facebook account meaning I was now connected to a larger community of my
@@ -74,9 +284,28 @@ after April 24th 2020.
 
 ![](README_files/figure-gfm/kudos-1.png)<!-- -->
 
-The evidence is clear:
+A linear regression run of *Kudos = Distance* gives a coefficient of
+0.5405. This means I should expect to get 1 kudos for every 540m run.
 
-**DISTANCE = KUDOS**
+    ## 
+    ## Call:
+    ## lm(formula = kudos_count ~ 0 + speed_min_km, data = acts)
+    ## 
+    ## Coefficients:
+    ## speed_min_km  
+    ##         1.62
+
+    ## 
+    ## Call:
+    ## lm(formula = kudos_count ~ distance, data = acts)
+    ## 
+    ## Coefficients:
+    ## (Intercept)     distance  
+    ##      1.9404       0.5394
+
+The evidence from this very detailed analysis is clear…
+
+<span style="     color: red !important;">DISTANCE = KUDOS</span>
 
 ## Visualising GPS data
 

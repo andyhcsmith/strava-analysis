@@ -43,6 +43,7 @@ suppressPackageStartupMessages({
   library(rStrava)
   library(googlePolylines)
   library(gridExtra)
+  library(kableExtra)
 })
 
 setwd('C:/Users/sma8lw/OneDrive - BP/Documents/Andrew/Other/strava-app')
@@ -51,6 +52,7 @@ data <- process_data('activities/')
 p1 <- plot_facets(data)
 p1
 ```   
+
 ## Using the Strava API
 
 The Strava API allows you to pull all of your activities into a data frame, which each row representing an aggreagted view of your run/cycle/swim. It contains information such as: date, distance, time, speed, elevation, heart-rate etc.
@@ -95,7 +97,7 @@ acts$distance_bucket = factor(acts$distance_bucket, levels=c("< 6km", "6km - 9km
 ### Speed vs Distance
 
 What happens to my speed as the distance I run get longer.... pretty obvious.
-The one interesting thing was that my runs in the 6km to 9km range were on average faster than the under 5km range. My guess is that the majority of my 'Under 5km runs' are when I have no energy to get out and do a proper run, and so I just run at a casual pace.
+The one interesting thing was that my runs in the _6km to 9km_ range were on **average** faster than the _Under 6km_ range. However, looking at the **median** the _Under 6km_ runs are faster. My guess is that occasionally when I am not feeling up for a run, I will just head out for a short and slow run which is skewing these means.
 
 ```{r run summary, echo=F}
 acts_summary <- acts %>% 
@@ -103,6 +105,7 @@ acts_summary <- acts %>%
                 summarise(`Number of Runs` = length(athlete.id), 
                           `Average Distance` = mean(distance), 
                           `Average Speed` = round(seconds_to_period(mean(speed_min_km)*60),0),
+                          `Median Speed` = round(seconds_to_period(median(speed_min_km)*60),0),
                           .groups = 'drop')
 
 knitr::kable(
@@ -114,14 +117,14 @@ knitr::kable(
 
 ``` {r speed vs distance, echo = F}
 
-acts <- acts %>% group_by(distance_bucket) %>% mutate(avg_speed = mean(speed_min_km))
+acts <- acts %>% group_by(distance_bucket) %>% mutate(avg_speed = mean(speed_min_km), median_speed = median(speed_min_km))
 speed_distance <- acts %>% 
                     ggplot(aes(x = speed_min_km, fill = distance_bucket)) + 
                     geom_density(alpha = 0.5) + 
                     labs(title = "Average speed (min/km) vs. Distance Run", x = "Speed (min/km)", y = "Density") +
                     xlim(3.5, 5.5) +
                     facet_grid(rows = vars(distance_bucket)) +
-                    geom_vline(aes(xintercept = avg_speed, group = distance_bucket), colour="grey50")
+                    geom_vline(aes(xintercept = median_speed, group = distance_bucket), colour="grey50")
 
 
 speed_distance
@@ -130,7 +133,7 @@ speed_distance
 
 ### Most importantly, how do I get Kudos?
 
-The social-media part of Strava allows users to like each others activities that they have posted, in Strava, this is called giving **'Kudos'**. I wondered, what the best way to get Kudos from my Strava community. Do they prefer fast runs, or longer runs? 
+The social-media part of Strava allows users to like each others activities that they have posted, in Strava, this is called giving **'Kudos'**. I wondered what the best way to get Kudos from my Strava community was. Do they prefer fast runs, or longer runs? 
 
 I should note that around mid-late April 2020 I synced my Strava with my Facebook account meaning I was now connected to a larger community of my friends. Hence, to make this a fair, I will only be looking at my runs after April 24th 2020.
 
@@ -139,19 +142,38 @@ I should note that around mid-late April 2020 I synced my Strava with my Faceboo
 ```{r kudos, echo = F}
 kudos_speed <- acts %>% filter(start_date >= "2020-04-20") %>%
                           ggplot(aes(x = speed_min_km, y = kudos_count)) + 
-                          geom_point()
+                          geom_point() +
+                          geom_smooth(method = "lm", formula = 'y ~ x', alpha = .15) +
+                          labs(title = "Kudos vs. Speed", x = "Speed (min/km)", y = "Kudos")
+
+
 
 kudos_distsance <- acts %>% filter(start_date >= "2020-04-20") %>%
                           ggplot(aes(x = distance, y = kudos_count)) + 
-                          geom_point()
+                          geom_point() + 
+                          geom_smooth(method = "lm", formula = 'y ~ x', alpha = .15) +
+                          labs(title = "Kudos vs. Distance", x = "Distance (km)", y = "Kudos")
+
 
 grid.arrange(kudos_speed, kudos_distsance, ncol = 2)
 
 ```
 
-The evidence is clear: 
+A linear regression run of _Kudos = Distance_ gives a coefficient of 0.5405. This means I should expect to get 1 kudos for every 540m run.
 
-**DISTANCE = KUDOS**
+```{r, echo = F}
+speed_model <- lm(data = acts, kudos_count ~ 0 + speed_min_km)
+distance_model <- lm(data = acts, kudos_count ~ distance)
+speed_model
+distance_model
+
+```
+
+The evidence from this very detailed analysis is clear...
+
+`r text_spec("DISTANCE = KUDOS", color = "red")`
+
+
 
 ## Visualising GPS data
 
