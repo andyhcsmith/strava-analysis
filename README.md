@@ -1,7 +1,8 @@
 Strava Analysis
 ================
 
-## Introduction
+Introduction
+------------
 
 The idea of this project was primarily a way of putting into practice my
 learnings from Jad Khalili’s [Udemy
@@ -11,10 +12,10 @@ in data science and source/version control.
 
 In this course Jad covers:
 
-  - An introduction to version/source control, Git and GitHub
-  - Theory around repositories, the ‘staging area’, and basic/advanced
+-   An introduction to version/source control, Git and GitHub
+-   Theory around repositories, the ‘staging area’, and basic/advanced
     Git commands
-  - Git branches, and how to add, remove and merge them
+-   Git branches, and how to add, remove and merge them
 
 The actual content of the project itself was a way to do some basic
 analysis of my Strava data. Strava is an online ‘social-media’ platform
@@ -26,246 +27,163 @@ package](https://github.com/fawda123/rStrava), and in order to create
 many of the visuals I used inspiration from [Marcus
 Volz](https://github.com/marcusvolz/strava).
 
-## Grab your attention
+Pretty Cool
+-----------
 
 I thought this was an awesome plot that Marcus Volz made - so simple yet
 effective in visualising all your activities in one plot.
 
 ![](README_files/figure-gfm/cars-1.png)<!-- -->
 
-## Using the Strava API
+Using the Strava API
+--------------------
 
 The Strava API allows you to pull all of your activities into a data
-frame, which each row representing an aggreagted view of your
+frame, with each row representing an aggreagated view of your
 run/cycle/swim. It contains information such as: date, distance, time,
-speed, elevation, heart-rate etc.
+speed, elevation, heart-rate etc. This aggregated view allows you to
+look at some high level data of your activities.
 
-This aggregated view allows you to look at some high level data of your
-activities.
+### How far am I running?
+
+Starting off simple, a look at the distances I am running. I have
+colored the histogram by the two houses I have lived in over this
+period. You’ll see the tall red bar at approximately 7.5km, which is a
+run that I used to do around Princes Park (obviously I need to get a bit
+more creative in my runs). On average it would appear I have been
+running further distances while living in Richmond - probably because my
+main loop is around the Tan - about 10km.
+
+![](README_files/figure-gfm/run%20distance-1.png)<!-- -->
+
+### How about my speed
+
+It appears that I have more slower runs since moving to Richmond, which
+might make sense given how above we saw that I am doing longer distances
+instead.
+
+![](README_files/figure-gfm/run%20speed-1.png)<!-- -->
 
 ### Speed vs Distance
 
-What happens to my speed as the distance I run get longer…. pretty
-obvious. The one interesting thing was that my runs in the *6km to 9km*
+Clearly though it would be best to view both Speed and Distance at the
+same time to get a more complete picture. So, what happens to my speed
+as the distance I run gets longer?
+
+The results are somewhat obvious, the larger the run, the slower the
+speed. The one interesting thing was that my runs in the *6km to 9km*
 range were on **average** faster than the *Under 6km* range. However,
 looking at the **median** the *Under 6km* runs are faster. My guess is
 that occasionally when I am not feeling up for a run, I will just head
 out for a short and slow run which is skewing these means.
 
 <table>
-
 <thead>
-
 <tr>
-
 <th style="text-align:left;">
-
 distance\_bucket
-
 </th>
-
 <th style="text-align:right;">
-
 Number of Runs
-
 </th>
-
 <th style="text-align:right;">
-
 Average Distance
-
 </th>
-
 <th style="text-align:right;">
-
 Average Speed
-
 </th>
-
 <th style="text-align:right;">
-
 Median Speed
-
 </th>
-
 </tr>
-
 </thead>
-
 <tbody>
-
 <tr>
-
 <td style="text-align:left;">
-
-\< 6km
-
+&lt; 6km
 </td>
-
 <td style="text-align:right;">
-
-20
-
+23
 </td>
-
 <td style="text-align:right;">
-
-4.489070
-
+4.44
 </td>
-
 <td style="text-align:right;">
-
-4M 29S
-
+4M 30S
 </td>
-
 <td style="text-align:right;">
-
-4M 22S
-
+4M 24S
 </td>
-
 </tr>
-
 <tr>
-
 <td style="text-align:left;">
-
 6km - 9km
-
 </td>
-
 <td style="text-align:right;">
-
-65
-
+67
 </td>
-
 <td style="text-align:right;">
-
-7.435383
-
+7.47
 </td>
-
 <td style="text-align:right;">
-
+4M 28S
+</td>
+<td style="text-align:right;">
 4M 27S
-
 </td>
-
-<td style="text-align:right;">
-
-4M 27S
-
-</td>
-
 </tr>
-
 <tr>
-
 <td style="text-align:left;">
-
 9km - 12km
-
 </td>
-
 <td style="text-align:right;">
-
-42
-
+44
 </td>
-
 <td style="text-align:right;">
-
-10.384460
-
+10.35
 </td>
-
 <td style="text-align:right;">
-
+4M 34S
+</td>
+<td style="text-align:right;">
 4M 33S
-
 </td>
-
-<td style="text-align:right;">
-
-4M 33S
-
-</td>
-
 </tr>
-
 <tr>
-
 <td style="text-align:left;">
-
 12km - 15km
-
 </td>
-
 <td style="text-align:right;">
-
-14
-
-</td>
-
-<td style="text-align:right;">
-
-12.998479
-
-</td>
-
-<td style="text-align:right;">
-
-4M 36S
-
-</td>
-
-<td style="text-align:right;">
-
-4M 37S
-
-</td>
-
-</tr>
-
-<tr>
-
-<td style="text-align:left;">
-
-\> 15km
-
-</td>
-
-<td style="text-align:right;">
-
 15
-
 </td>
-
 <td style="text-align:right;">
-
-22.594313
-
+12.94
 </td>
-
 <td style="text-align:right;">
-
-4M 43S
-
+4M 37S
 </td>
-
 <td style="text-align:right;">
-
-4M 44S
-
+4M 38S
 </td>
-
 </tr>
-
+<tr>
+<td style="text-align:left;">
+&gt; 15km
+</td>
+<td style="text-align:right;">
+15
+</td>
+<td style="text-align:right;">
+22.59
+</td>
+<td style="text-align:right;">
+4M 43S
+</td>
+<td style="text-align:right;">
+4M 44S
+</td>
+</tr>
 </tbody>
-
 </table>
 
 ![](README_files/figure-gfm/speed%20vs%20distance-1.png)<!-- -->
@@ -280,7 +198,7 @@ community was. Do they prefer fast runs, or longer runs?
 I should note that around mid-late April 2020 I synced my Strava with my
 Facebook account meaning I was now connected to a larger community of my
 friends. Hence, to make this a fair, I will only be looking at my runs
-after April 24th 2020.
+after April 24th 2020 (when I synced my account).
 
 ![](README_files/figure-gfm/kudos-1.png)<!-- -->
 
@@ -293,7 +211,7 @@ A linear regression run of *Kudos = Distance* gives a coefficient of
     ## 
     ## Coefficients:
     ## speed_min_km  
-    ##         1.62
+    ##        1.651
 
     ## 
     ## Call:
@@ -301,13 +219,14 @@ A linear regression run of *Kudos = Distance* gives a coefficient of
     ## 
     ## Coefficients:
     ## (Intercept)     distance  
-    ##      1.9404       0.5394
+    ##      2.2321       0.5321
 
-The evidence from this very detailed analysis is clear…
+The evidence from this **very detailed** analysis is clear…
 
 <span style="     color: red !important;">DISTANCE = KUDOS</span>
 
-## Visualising GPS data
+Visualising GPS data
+--------------------
 
 Strava members are also able to access their Strava data by requesting
 an archive of all of their activities
@@ -345,6 +264,8 @@ part of Melbourne. Three things to note:
     you down St Kilda.
 3.  The run I did where I spelt out my name (ANDY) :)
 
+![](www/andy-runs.gif)
+
 ![](README_files/figure-gfm/map-1.png)<!-- -->
 
 ### What time of the day?
@@ -353,8 +274,6 @@ This visual allows you to see the frequency of your runs by time of day
 and day of week. I clearly prefer to run after work on Monday -
 Thursday, in the mornings on Friday and Saturday, and across the day on
 Sundays.
-
-    ## Picking joint bandwidth of 2500
 
 ![](README_files/figure-gfm/time%20of%20day-1.png)<!-- -->
 
@@ -366,4 +285,11 @@ have been much more dispersed across the day compared to pre-COVID.
 
 ![](README_files/figure-gfm/time%20of%20day%202-1.png)<!-- -->
 
-## Conclusion
+Conclusion
+----------
+
+This analysis was a great way to familiarise myself with Git and GitHub.
+It also was just interesting to get a different view of my exercise
+data, and it has been well received by friends who also use Strava.
+
+I hope you have enjoyed :)

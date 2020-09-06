@@ -1,8 +1,8 @@
 # This script analyses strava data
 
 #install.packages(c("devtools", "mapproj", "tidyverse", "gtools"))
-devtools::install_github("marcusvolz/strava")
-devtools::install_github('fawda123/rStrava')
+# devtools::install_github("marcusvolz/strava")
+# devtools::install_github('fawda123/rStrava')
 
 library(tidyverse)
 library(yaml)
@@ -14,7 +14,7 @@ library(rStrava)
 library(googlePolylines)
 library(ggmap)
 
-setwd('C:/Users/sma8lw/OneDrive - BP/Documents/Andrew/Other/strava-app')
+setwd('C:/Users/asmi797/OneDrive/Documents/Leisure/data-projects/strava-analysis')
 
 # Setting up credentials, authorization and tokens
 credentials = suppressWarnings(read_yaml('credentials.yaml'))
@@ -91,5 +91,49 @@ p_map <- plot_map(data, lon_min = 144.75, lon_max = 145.16, lat_min = -38, lat_m
 p_day <- plot_calendar(data, unit = "distance")
 p_pre_covid <- plot_ridges(data %>% filter(time <= "2020-03-01"))
 p_post_covid <- plot_ridges(data %>% filter(time >= "2020-03-01"))
+
+
+# Create a gif
+
+plot_map_andy <- function (data, run_id, lon_min = NA, lat_min = NA, lon_max = NA, lat_max = NA) 
+{
+  run <- data %>% filter(id <= run_id)
+  p1<- run %>% ggplot(aes(lon, lat, group = id)) + 
+               geom_path(alpha = 0.3, size = 0.3, lineend = "round") + 
+               coord_map(projection = "mercator", xlim = c(lon_min,lon_max), ylim = c(lat_min, lat_max)) + theme_void()
+  run_path = paste0("www/run",as.character(run_id),".png")
+  ggsave(run_path, p1, width = 20, height = 20, units = "cm")
+  
+}
+
+for(i in unique(data$id)){
+  plot_map_andy(data,i, lon_min = 144.863491, lon_max = 145.073007, lat_min = -37.883543, lat_max = -37.766141)
+}
+
+# ### How did I improve in speed and distance after training
+# 
+# I wanted to be able to visualise my improvement in distance and speed as my training increased. Because I can easily distinguish the two periods of training, I set two start dates and calculated the number of days that had passed since these dates.
+# 
+# * Start Date 1: 1 May 2019
+# * Start Date 2: 1 March 2020 
+# 
+# The plots below show my speed and distance against the number of days since I had started training.
+# 
+# 
+# ```{r training, echo = F}
+# 
+# acts <- acts %>% 
+#         filter(start_date <= "2019-10-20" | start_date >= "2020-03-01") %>%
+#         mutate(days_training1 = as.numeric(difftime(as.Date(start_date), "2019-05-20")), days_training2 = as.numeric(difftime(as.Date(start_date), "2020-03-01"))) %>% 
+#         mutate(days_training = if_else(days_training2 > 0, days_training2, days_training1)) %>% 
+#         select(-days_training1, -days_training2) %>%
+#         mutate(training_bucket = if_else(days_training < 60, "First 2 months", if_else( days_training > 120, "After 4 months", "2 - 4 months")))
+# 
+# acts %>% ggplot(aes(x = days_training, y = distance, color = speed_min_km)) + geom_point()
+# acts %>% ggplot(aes(x = days_training, y = speed_min_km)) + geom_point()
+# 
+# ```
+
+
 
 
