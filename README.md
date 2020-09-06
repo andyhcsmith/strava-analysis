@@ -64,6 +64,8 @@ instead.
 
 ![](README_files/figure-gfm/run%20speed-1.png)<!-- -->
 
+    ## Auto-refreshing stale OAuth token.
+
 ### Speed vs Distance
 
 Clearly though it would be best to view both Speed and Distance at the
